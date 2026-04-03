@@ -122,7 +122,17 @@ export function ComposeForm({
       setGoalMode(getPresetMode(record.composeInput.connectionGoal, connectionGoalOptions));
       setAskMode(getPresetMode(record.composeInput.ask, networkingAskOptions));
       setToneMode(getPresetMode(record.composeInput.desiredTone, desiredToneOptions));
+    } else {
+      setValues(initialComposeValues);
     }
+    // Always populate recipient fields from the draft record
+    setValues((current) => ({
+      ...current,
+      recipientEmail: record.recipientEmail || current.recipientEmail || "",
+      recipientCompany: record.recipientCompany || current.recipientCompany || "",
+      recipientRole: record.recipientRole || current.recipientRole || "",
+      recipientName: record.recipientName || current.recipientName || ""
+    }));
     setEditorStatus("idle");
     setError("");
   }
